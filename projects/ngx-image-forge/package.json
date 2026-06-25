@@ -12,6 +12,7 @@
   ],
   "author": "Gabriel Muller",
   "license": "MIT",
+  "homepage": "https://hoplageiss.github.io/ngx-image-forge/",
   "repository": {
     "type": "git",
     "url": "https://github.com/HoplaGeiss/ngx-image-forge"
