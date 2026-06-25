@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  afterEveryRender,
   computed,
   signal,
   viewChild,
@@ -50,6 +51,16 @@ export class App {
     { label: '9:16', value: 9 / 16 },
   ];
 
+  constructor() {
+    afterEveryRender(() => {
+      const editor = this.editorRef();
+      if (!editor?.isLoaded()) return;
+      try {
+        this.croppedResult.set(editor.crop());
+      } catch { /* no-op */ }
+    });
+  }
+
   onFileChange(event: Event): void {
     const input = event.target as HTMLInputElement;
     const file = input.files?.[0];
@@ -68,38 +79,6 @@ export class App {
     this.errorMessage.set('Failed to load image. Please try a different file.');
     this.imageSource.set(null);
     this.imageMetadata.set(null);
-  }
-
-  crop(): void {
-    const editor = this.editorRef();
-    if (!editor) return;
-    try {
-      const result = editor.crop();
-      this.croppedResult.set(result);
-    } catch {
-      this.errorMessage.set('No image loaded yet.');
-    }
-  }
-
-  reset(): void {
-    this.editorRef()?.reset();
-    this.croppedResult.set(null);
-  }
-
-  rotateLeft(): void {
-    this.editorRef()?.rotate(-90);
-  }
-
-  rotateRight(): void {
-    this.editorRef()?.rotate(90);
-  }
-
-  flipH(): void {
-    this.editorRef()?.flipHorizontal();
-  }
-
-  flipV(): void {
-    this.editorRef()?.flipVertical();
   }
 
   onAspectRatioChange(raw: string): void {

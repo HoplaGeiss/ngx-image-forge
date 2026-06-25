@@ -75,6 +75,17 @@ function hitTestHandle(
   return null;
 }
 
+function cursorForHandle(handle: HandleType | 'crosshair'): string {
+  switch (handle) {
+    case 'tl': case 'br': return 'nwse-resize';
+    case 'tr': case 'bl': return 'nesw-resize';
+    case 'tc': case 'bc': return 'ns-resize';
+    case 'ml': case 'mr': return 'ew-resize';
+    case 'move': return 'move';
+    default: return 'crosshair';
+  }
+}
+
 function pointInRect(px: number, py: number, r: Rect): boolean {
   return px >= r.x && px <= r.x + r.width && py >= r.y && py <= r.y + r.height;
 }
@@ -505,12 +516,18 @@ export class NgxImageEditorComponent implements OnInit {
   }
 
   onMouseMove(event: MouseEvent): void {
-    if (!this.dragActive) return;
-    this.updateDrag(this.canvasPoint(event));
+    const pt = this.canvasPoint(event);
+    if (this.dragActive) {
+      this.updateDrag(pt);
+    } else {
+      this.updateCursor(pt);
+    }
   }
 
   onMouseUp(): void {
     this.endDrag();
+    const canvas = this.mainCanvasRef()?.nativeElement;
+    if (canvas) canvas.style.cursor = 'crosshair';
   }
 
   onTouchStart(event: TouchEvent): void {
@@ -774,6 +791,21 @@ export class NgxImageEditorComponent implements OnInit {
 
   // ── Private: drag interaction ──────────────────────────────────────────────
 
+  private updateCursor(pt: Point): void {
+    const canvas = this.mainCanvasRef()?.nativeElement;
+    if (!canvas) return;
+    const cr = this.cropRect();
+    if (!cr) { canvas.style.cursor = 'crosshair'; return; }
+    const handle = hitTestHandle(pt.x, pt.y, this.currentHandles, this.handleHitArea());
+    if (handle) {
+      canvas.style.cursor = cursorForHandle(handle);
+    } else if (pointInRect(pt.x, pt.y, cr)) {
+      canvas.style.cursor = 'move';
+    } else {
+      canvas.style.cursor = 'crosshair';
+    }
+  }
+
   private startDrag(pt: Point): void {
     const cr = this.cropRect();
     if (!cr) return;
@@ -790,6 +822,9 @@ export class NgxImageEditorComponent implements OnInit {
     this.dragActive = true;
     this.dragStart = { ...pt };
     this.cropAtDragStart = { ...cr };
+
+    const canvas = this.mainCanvasRef()?.nativeElement;
+    if (canvas) canvas.style.cursor = cursorForHandle(this.activeHandle ?? 'crosshair');
   }
 
   private updateDrag(pt: Point): void {

@@ -1,16 +1,33 @@
 <div class="demo-layout">
   <header class="demo-header">
-    <h1 class="demo-title">
-      <span class="demo-title__icon" aria-hidden="true">🔬</span>
-      ngx-image-forge
-    </h1>
-    <p class="demo-subtitle">Zero-dependency Angular image editor · Signals-native · Canvas API</p>
+    <div class="demo-header__left">
+      <h1 class="demo-title">
+        <span class="demo-title__icon" aria-hidden="true">🔬</span>
+        ngx-image-forge
+      </h1>
+      <p class="demo-subtitle">Zero-dependency Angular image editor · Signals-native · Canvas API</p>
+    </div>
+    <nav class="demo-header__links" aria-label="Project links">
+      <a href="https://github.com/HoplaGeiss/ngx-image-forge" class="demo-header__link" target="_blank" rel="noopener noreferrer" aria-label="GitHub repository">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
+          <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2Z"/>
+        </svg>
+        GitHub
+      </a>
+      <a href="https://www.npmjs.com/package/ngx-image-forge" class="demo-header__link" target="_blank" rel="noopener noreferrer" aria-label="npm package">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
+          <path d="M1.763 0C.786 0 0 .786 0 1.763v20.474C0 23.214.786 24 1.763 24h20.474c.977 0 1.763-.786 1.763-1.763V1.763C24 .786 23.214 0 22.237 0zM5.13 5.323l13.837.019-.009 13.836h-3.464l.01-10.382h-3.456L12.04 19.17H5.113z"/>
+        </svg>
+        npm
+      </a>
+    </nav>
   </header>
 
   <main class="demo-main">
-    <div class="demo-panel demo-panel--editor">
 
-      <!-- ── File upload ─────────────────────────────────────────── -->
+    <!-- ── Left: load + configure ────────────────────────────────────── -->
+    <div class="demo-panel demo-panel--controls">
+
       <section class="demo-section" aria-labelledby="upload-heading">
         <h2 id="upload-heading" class="demo-section__title">1. Load an image</h2>
         <label class="demo-upload" for="file-input">
@@ -37,7 +54,6 @@
         }
       </section>
 
-      <!-- ── Options ────────────────────────────────────────────── -->
       <section class="demo-section" aria-labelledby="options-heading">
         <h2 id="options-heading" class="demo-section__title">2. Configure</h2>
         <div class="demo-options">
@@ -97,8 +113,10 @@
           </label>
         </div>
       </section>
+    </div>
 
-      <!-- ── Editor ─────────────────────────────────────────────── -->
+    <!-- ── Center: editor ────────────────────────────────────────────── -->
+    <div class="demo-panel demo-panel--editor">
       <section class="demo-section demo-section--editor" aria-labelledby="editor-heading">
         <h2 id="editor-heading" class="demo-section__title">3. Edit</h2>
         <div class="demo-editor-wrap">
@@ -115,27 +133,6 @@
         </div>
       </section>
 
-      <!-- ── Crop action ────────────────────────────────────────── -->
-      <div class="demo-actions">
-        <button
-          type="button"
-          class="demo-btn demo-btn--primary"
-          (click)="crop()"
-          [disabled]="!imageSource()"
-          aria-label="Crop image and see result"
-        >
-          Crop image
-        </button>
-        <button
-          type="button"
-          class="demo-btn"
-          (click)="reset()"
-          [disabled]="!imageSource()"
-          aria-label="Reset editor"
-        >
-          Reset
-        </button>
-      </div>
     </div>
 
     <!-- ── Result panel ───────────────────────────────────────────── -->

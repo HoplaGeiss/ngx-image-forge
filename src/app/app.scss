@@ -10,8 +10,50 @@
 }
 
 .demo-header {
-  padding: 24px 32px 20px;
+  padding: 20px 32px;
   border-bottom: 1px solid #222;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+
+  &__left {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  &__links {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  &__link {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7px 14px;
+    border: 1px solid #333;
+    border-radius: 7px;
+    color: #aaa;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    transition: border-color 0.15s, color 0.15s, background 0.15s;
+
+    &:hover {
+      border-color: #555;
+      color: #fff;
+      background: #1a1a1a;
+    }
+
+    &:focus-visible {
+      outline: 2px solid #6ea8fe;
+      outline-offset: 2px;
+    }
+  }
 }
 
 .demo-title {
@@ -34,12 +76,16 @@
 
 .demo-main {
   display: grid;
-  grid-template-columns: 1fr 340px;
+  grid-template-columns: 280px 1fr 320px;
   gap: 0;
   flex: 1;
   min-height: 0;
 
-  @media (max-width: 900px) {
+  @media (max-width: 1100px) {
+    grid-template-columns: 240px 1fr 280px;
+  }
+
+  @media (max-width: 800px) {
     grid-template-columns: 1fr;
   }
 }
@@ -47,14 +93,22 @@
 // ── Panels ─────────────────────────────────────────────────────────────────────
 
 .demo-panel {
-  padding: 24px 32px;
+  padding: 24px 28px;
   overflow-y: auto;
+
+  &--controls {
+    border-right: 1px solid #222;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
 
   &--editor {
     border-right: 1px solid #222;
     display: flex;
     flex-direction: column;
     gap: 24px;
+    overflow-y: hidden;
   }
 
   &--result {
@@ -71,6 +125,7 @@
 
   &--editor {
     flex: 1;
+    min-height: 0;
   }
 }
 
@@ -188,10 +243,16 @@
 // ── Editor wrapper ─────────────────────────────────────────────────────────────
 
 .demo-editor-wrap {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+
   ngx-image-editor {
     display: flex;
     flex-direction: column;
-    height: 480px;
+    flex: 1;
+    min-height: 0;
     border-radius: 10px;
     overflow: hidden;
   }
