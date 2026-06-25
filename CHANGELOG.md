@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/HoplaGeiss/ngx-image-forge/compare/v1.1.0...v1.1.1) (2026-06-25)
+
+
+### Bug Fixes
+
+* change homepage npm ([64e33a1](https://github.com/HoplaGeiss/ngx-image-forge/commit/64e33a153c416efec84362c511d864e4f15747ba))
+
 # [1.1.0](https://github.com/HoplaGeiss/ngx-image-forge/compare/v1.0.2...v1.1.0) (2026-06-25)
 
 
