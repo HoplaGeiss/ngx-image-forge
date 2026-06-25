@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/HoplaGeiss/ngx-image-forge/compare/v1.0.2...v1.1.0) (2026-06-25)
+
+
+### Features
+
+* update to pipelines ([1ec3aa2](https://github.com/HoplaGeiss/ngx-image-forge/commit/1ec3aa2558e318887699e172cd6098d7313ba3a7))
+
 ## [1.0.2](https://github.com/HoplaGeiss/ngx-image-forge/compare/v1.0.1...v1.0.2) (2026-06-25)
 
 
