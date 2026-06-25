@@ -12,12 +12,19 @@
     "experimentalDecorators": true,
     "importHelpers": true,
     "target": "ES2022",
-    "module": "preserve"
+    "module": "preserve",
+    "strict": true,
+    "paths": {
+      "ngx-image-forge": [
+        "./projects/ngx-image-forge/src/public-api.ts"
+      ]
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
-    "strictInputAccessModifiers": true
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
   },
   "files": [],
   "references": [
@@ -26,6 +33,12 @@
     },
     {
       "path": "./tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/ngx-image-forge/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/ngx-image-forge/tsconfig.lib.prod.json"
     }
   ]
 }

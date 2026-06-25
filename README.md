@@ -1,59 +1,215 @@
-# NgxImageForge
+# ngx-image-forge
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.0.4.
+A signals-native, dependency-free Angular image editing library using the Canvas API.
 
-## Development server
+[![CI](https://github.com/HoplaGeiss/ngx-image-forge/actions/workflows/ci.yml/badge.svg)](https://github.com/HoplaGeiss/ngx-image-forge/actions/workflows/ci.yml)
+[![npm](https://img.shields.io/npm/v/ngx-image-forge)](https://www.npmjs.com/package/ngx-image-forge)
+[![license](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
-To start a local development server, run:
+**[Live demo →](https://hoplageiss.github.io/ngx-image-forge/)**
 
-```bash
-ng serve
-```
+---
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Features
 
-## Code scaffolding
+- **Signals-first** — internal state is pure signals, OnPush throughout
+- **Zoneless-compatible** — works with `provideExperimentalZonelessChangeDetection()`
+- **Zero runtime dependencies** — pure Canvas API, no third-party image libraries
+- **Three usage patterns** — embedded component, trigger directive, or programmatic service
+- **Non-destructive transforms** — rotate, flip, and crop are composed on export, never on the original
+- **Aspect ratio constraints** — free, fixed numeric ratio (e.g. `16/9`), or `1` for square
+- **Circular crop** — circular clip mask applied at export time
+- **Output control** — JPEG, PNG, or WebP with configurable quality and max dimensions
+- **Touch support** — drag and resize handles work on mobile
+- **Accessible** — keyboard-navigable overlay, focus management on open/close
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+---
 
-```bash
-ng generate component component-name
-```
+## Requirements
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+- Angular **19+**
 
-```bash
-ng generate --help
-```
+---
 
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+## Installation
 
 ```bash
-ng test
+npm install ngx-image-forge
+# or
+pnpm add ngx-image-forge
 ```
 
-## Running end-to-end tests
+---
 
-For end-to-end (e2e) testing, run:
+## Usage
+
+There are three ways to use ngx-image-forge. Pick the one that fits your workflow.
+
+---
+
+### 1. Embedded component
+
+Drop `<ngx-image-editor>` directly into your template and control it via a `viewChild` reference. Best for dedicated editing pages.
+
+```ts
+import { NgxImageEditorComponent, NgxCroppedImage } from 'ngx-image-forge';
+
+@Component({
+  imports: [NgxImageEditorComponent],
+  template: `
+    <ngx-image-editor [image]="file" [aspectRatio]="1" #editor style="height: 500px" />
+    <button (click)="crop(editor)">Crop</button>
+  `,
+})
+export class MyComponent {
+  file: File | null = null;
+
+  crop(editor: NgxImageEditorComponent): void {
+    const result: NgxCroppedImage = editor.crop();
+    console.log(result.dataUrl, result.blob);
+  }
+}
+```
+
+---
+
+### 2. Trigger directive
+
+Attach `ngxImageEditorTrigger` to any clickable element. Clicking it opens a full-screen overlay; the result is emitted via `(forgeResult)`. Best for inline "edit" buttons next to images.
+
+```ts
+import { NgxImageEditorTriggerDirective, NgxCroppedImage } from 'ngx-image-forge';
+
+@Component({
+  imports: [NgxImageEditorTriggerDirective],
+  template: `
+    <button
+      ngxImageEditorTrigger
+      [triggerImage]="file"
+      [triggerAspectRatio]="16 / 9"
+      (forgeResult)="onResult($event)"
+    >
+      Edit image
+    </button>
+  `,
+})
+export class MyComponent {
+  file: File | null = null;
+
+  onResult(result: NgxCroppedImage | null): void {
+    if (result) console.log('Cropped!', result.dataUrl);
+  }
+}
+```
+
+---
+
+### 3. Programmatic service
+
+Inject `NgxImageForgeService` and call `open()` anywhere. Returns an `Observable` that emits once with the result (or `null` on cancel). Best for flows where the editor is opened from a service or complex logic.
+
+```ts
+import { NgxImageForgeService, NgxCroppedImage } from 'ngx-image-forge';
+
+@Component({ ... })
+export class MyComponent {
+  private readonly forge = inject(NgxImageForgeService);
+
+  openEditor(file: File): void {
+    this.forge.open({ image: file, aspectRatio: 1, roundCrop: true }).subscribe(result => {
+      if (result) console.log('Cropped!', result.dataUrl);
+    });
+  }
+}
+```
+
+---
+
+## `NgxImageEditorComponent` inputs
+
+| Input | Type | Default | Description |
+|---|---|---|---|
+| `image` | `File \| string \| null` | `null` | Source image — a `File` object or a URL string |
+| `aspectRatio` | `number \| 'free'` | `'free'` | Crop constraint — a ratio (e.g. `16/9`) or `'free'` |
+| `maxWidth` | `number` | `0` | Maximum output width in px; `0` = unconstrained |
+| `maxHeight` | `number` | `0` | Maximum output height in px; `0` = unconstrained |
+| `quality` | `number` | `0.92` | JPEG/WebP encoding quality, 0–1 |
+| `outputFormat` | `'jpeg' \| 'png' \| 'webp'` | `'jpeg'` | Output MIME type |
+| `roundCrop` | `boolean` | `false` | Apply circular clip mask to the crop output |
+| `minCropWidth` | `number` | `50` | Minimum crop rectangle width in canvas px |
+| `minCropHeight` | `number` | `50` | Minimum crop rectangle height in canvas px |
+| `handleSize` | `number` | `10` | Side length in px of each resize handle square |
+| `handleHitArea` | `number` | `16` | Hit-test radius in px around each handle (increase for touch) |
+| `overlayOpacity` | `number` | `0.55` | Opacity of the dark overlay outside the crop rectangle |
+| `cropBorderColor` | `string` | `'#ffffff'` | CSS colour of the crop rectangle border |
+| `cropBorderWidth` | `number` | `1.5` | Width in px of the crop rectangle border |
+| `handleColor` | `string` | `'#ffffff'` | CSS colour of the resize handles |
+
+## `NgxImageEditorComponent` outputs
+
+| Output | Payload | Description |
+|---|---|---|
+| `imageLoaded` | `{ naturalWidth: number; naturalHeight: number }` | Fires when the image has loaded and is ready for editing |
+| `loadError` | `string \| Event` | Fires when the image fails to load |
+| `imageCropped` | `NgxCroppedImage` | Fires immediately after a successful `crop()` call |
+
+## `NgxImageEditorComponent` methods
+
+| Method | Description |
+|---|---|
+| `crop()` | Performs the crop synchronously and returns an `NgxCroppedImage`. Throws if no image is loaded. |
+| `reset()` | Restores rotation, flip, and crop rectangle to their initial state. |
+| `rotate(degrees)` | Rotates the image by the given angle. Use multiples of 90 for lossless steps. |
+| `setRotation(degrees)` | Sets the exact rotation angle in degrees. |
+| `flipHorizontal()` | Toggles horizontal flip. |
+| `flipVertical()` | Toggles vertical flip. |
+
+---
+
+## `[ngxImageEditorTrigger]` directive inputs
+
+| Input | Type | Default | Description |
+|---|---|---|---|
+| `triggerImage` | `File \| string \| null` | `null` | Source image |
+| `triggerAspectRatio` | `number \| 'free'` | `'free'` | Aspect ratio constraint |
+| `triggerMaxWidth` | `number` | `0` | Maximum output width in px |
+| `triggerMaxHeight` | `number` | `0` | Maximum output height in px |
+| `triggerQuality` | `number` | `0.92` | JPEG/WebP encoding quality |
+| `triggerOutputFormat` | `'jpeg' \| 'png' \| 'webp'` | `'jpeg'` | Output MIME type |
+| `triggerRoundCrop` | `boolean` | `false` | Apply circular clip mask |
+
+**Output:** `(forgeResult)` — emits `NgxCroppedImage` on confirm, `null` on cancel.
+
+---
+
+## `NgxCroppedImage`
+
+The object returned by `crop()` and emitted by all result outputs.
+
+| Field | Type | Description |
+|---|---|---|
+| `blob` | `Blob` | Cropped image as a Blob, ready for upload |
+| `dataUrl` | `string` | Base64 data URL, suitable for `<img src>` |
+| `width` | `number` | Output width in px |
+| `height` | `number` | Output height in px |
+| `originalWidth` | `number` | Natural width of the source image in px |
+| `originalHeight` | `number` | Natural height of the source image in px |
+
+---
+
+## Contributing
+
+Pull requests are welcome. For significant changes please open an issue first.
 
 ```bash
-ng e2e
+git clone https://github.com/HoplaGeiss/ngx-image-forge.git
+cd ngx-image-forge
+pnpm install
+ng serve   # starts the demo app at localhost:4200
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+---
 
-## Additional Resources
+## License
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+[MIT](LICENSE)

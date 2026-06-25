@@ -1,0 +1,35 @@
+{
+  "name": "ngx-image-forge",
+  "version": "0.1.0",
+  "description": "A signals-native, dependency-free Angular image editing library using the Canvas API",
+  "keywords": [
+    "angular",
+    "image",
+    "editor",
+    "crop",
+    "canvas",
+    "signals"
+  ],
+  "author": "Gabriel Muller",
+  "license": "MIT",
+  "peerDependencies": {
+    "@angular/common": ">=19.0.0",
+    "@angular/core": ">=19.0.0"
+  },
+  "module": "fesm2022/ngx-image-forge.mjs",
+  "typings": "types/ngx-image-forge.d.ts",
+  "exports": {
+    "./package.json": {
+      "default": "./package.json"
+    },
+    ".": {
+      "types": "./types/ngx-image-forge.d.ts",
+      "default": "./fesm2022/ngx-image-forge.mjs"
+    }
+  },
+  "sideEffects": false,
+  "type": "module",
+  "dependencies": {
+    "tslib": "^2.3.0"
+  }
+}

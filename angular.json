@@ -2,11 +2,11 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "cli": {
-    "packageManager": "npm"
+    "packageManager": "pnpm"
   },
   "newProjectRoot": "projects",
   "projects": {
-    "ngx-image-forge": {
+    "demo": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -61,16 +61,39 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "ngx-image-forge:build:production"
+              "buildTarget": "demo:build:production"
             },
             "development": {
-              "buildTarget": "ngx-image-forge:build:development"
+              "buildTarget": "demo:build:development"
             }
           },
           "defaultConfiguration": "development"
         },
         "test": {
           "builder": "@angular/build:unit-test"
+        }
+      }
+    },
+    "ngx-image-forge": {
+      "projectType": "library",
+      "root": "projects/ngx-image-forge",
+      "sourceRoot": "projects/ngx-image-forge/src",
+      "prefix": "ngx",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "options": {
+            "project": "projects/ngx-image-forge/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/ngx-image-forge/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/ngx-image-forge/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
         }
       }
     }

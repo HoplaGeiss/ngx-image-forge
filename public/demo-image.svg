@@ -1,0 +1,46 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='800' height='600' viewBox='0 0 800 600'>
+  <defs>
+    <linearGradient id='sky' x1='0' y1='0' x2='0' y2='1'>
+      <stop offset='0%' stop-color='#1a1a2e'/>
+      <stop offset='100%' stop-color='#16213e'/>
+    </linearGradient>
+    <linearGradient id='ground' x1='0' y1='0' x2='0' y2='1'>
+      <stop offset='0%' stop-color='#0f3460'/>
+      <stop offset='100%' stop-color='#533483'/>
+    </linearGradient>
+    <radialGradient id='sun' cx='70%' cy='30%' r='15%'>
+      <stop offset='0%' stop-color='#e94560' stop-opacity='1'/>
+      <stop offset='100%' stop-color='#e94560' stop-opacity='0'/>
+    </radialGradient>
+  </defs>
+  <!-- Sky -->
+  <rect width='800' height='600' fill='url(#sky)'/>
+  <!-- Sun glow -->
+  <ellipse cx='560' cy='180' rx='120' ry='120' fill='url(#sun)' opacity='0.8'/>
+  <!-- Sun -->
+  <circle cx='560' cy='180' r='50' fill='#e94560'/>
+  <!-- Horizon reflection on water -->
+  <rect y='380' width='800' height='220' fill='url(#ground)' opacity='0.9'/>
+  <!-- Mountain 1 -->
+  <polygon points='100,380 280,160 460,380' fill='#0f3460' opacity='0.9'/>
+  <!-- Mountain 2 -->
+  <polygon points='300,380 480,200 660,380' fill='#16213e' opacity='0.95'/>
+  <!-- Mountain 3 (small) -->
+  <polygon points='0,380 120,260 250,380' fill='#0d0d1a' opacity='0.9'/>
+  <!-- Water reflection lines -->
+  <line x1='0' y1='420' x2='800' y2='420' stroke='#e94560' stroke-width='1.5' opacity='0.3'/>
+  <line x1='0' y1='450' x2='800' y2='450' stroke='#e94560' stroke-width='1' opacity='0.2'/>
+  <line x1='0' y1='480' x2='800' y2='480' stroke='#533483' stroke-width='1' opacity='0.2'/>
+  <!-- Stars -->
+  <circle cx='80' cy='60' r='1.5' fill='white' opacity='0.8'/>
+  <circle cx='150' cy='30' r='1' fill='white' opacity='0.6'/>
+  <circle cx='220' cy='90' r='1.5' fill='white' opacity='0.7'/>
+  <circle cx='350' cy='50' r='1' fill='white' opacity='0.5'/>
+  <circle cx='420' cy='80' r='1.5' fill='white' opacity='0.8'/>
+  <circle cx='500' cy='40' r='1' fill='white' opacity='0.6'/>
+  <circle cx='650' cy='70' r='1.5' fill='white' opacity='0.7'/>
+  <circle cx='720' cy='30' r='1' fill='white' opacity='0.5'/>
+  <circle cx='760' cy='100' r='1.5' fill='white' opacity='0.8'/>
+  <!-- Label -->
+  <text x='400' y='560' text-anchor='middle' font-family='system-ui,sans-serif' font-size='16' fill='rgba(255,255,255,0.4)'>ngx-image-forge · demo image</text>
+</svg>
