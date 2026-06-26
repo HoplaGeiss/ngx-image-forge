@@ -1,0 +1,76 @@
+<main class="profile-main" role="tabpanel" aria-label="Profile Editor">
+  <div class="profile-scene">
+
+    <div class="profile-card">
+      <!-- Avatar -->
+      <div class="profile-avatar-section">
+        <button
+          type="button"
+          class="profile-avatar-btn"
+          (click)="openPicker()"
+          aria-label="Change profile picture"
+        >
+          @if (profileImage()) {
+            <img [src]="profileImage()" class="profile-avatar__img" alt="Profile picture" />
+          } @else {
+            <svg class="profile-avatar__placeholder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true">
+              <circle cx="12" cy="8" r="4"/>
+              <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+            </svg>
+          }
+          <span class="profile-avatar__overlay" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+              <circle cx="12" cy="13" r="4"/>
+            </svg>
+          </span>
+        </button>
+        <input
+          #fileInput
+          type="file"
+          accept="image/*"
+          class="profile-file-input"
+          (change)="onFileChange($event)"
+          aria-label="Choose profile picture file"
+        />
+        <p class="profile-avatar-hint">Click to change photo</p>
+      </div>
+
+      <!-- Fake form fields -->
+      <div class="profile-fields">
+        <div class="profile-field-row">
+          <div class="profile-field">
+            <label class="profile-field__label" for="pf-first">First name</label>
+            <input id="pf-first" type="text" class="profile-field__input" value="Alex" readonly aria-readonly="true" />
+          </div>
+          <div class="profile-field">
+            <label class="profile-field__label" for="pf-last">Last name</label>
+            <input id="pf-last" type="text" class="profile-field__input" value="Morgan" readonly aria-readonly="true" />
+          </div>
+        </div>
+        <div class="profile-field">
+          <label class="profile-field__label" for="pf-email">Email</label>
+          <input id="pf-email" type="email" class="profile-field__input" value="alex.morgan@example.com" readonly aria-readonly="true" />
+        </div>
+        <div class="profile-field">
+          <label class="profile-field__label" for="pf-bio">Bio</label>
+          <textarea id="pf-bio" class="profile-field__input profile-field__input--textarea" readonly aria-readonly="true">Frontend engineer · Coffee enthusiast · Building cool things with Angular.</textarea>
+        </div>
+
+        <div class="profile-actions">
+          <button type="button" class="demo-btn demo-btn--primary" disabled aria-disabled="true">Save changes</button>
+          <button type="button" class="demo-btn" disabled aria-disabled="true">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hint badge -->
+    <p class="profile-hint">
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <circle cx="12" cy="12" r="10"/>
+        <path d="M12 16v-4M12 8h.01"/>
+      </svg>
+      Uses <code>NgxImageForgeService</code> — opens the modal programmatically after file selection, with <code>aspectRatio: 1</code> and <code>roundCrop: true</code>.
+    </p>
+  </div>
+</main>

@@ -1,2 +1,41 @@
 *, *::before, *::after { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; height: 100%; }
+
+// ── Shared button ──────────────────────────────────────────────────────────────
+
+.demo-btn {
+  padding: 9px 20px;
+  border-radius: 7px;
+  border: 1px solid #444;
+  background: #2a2a2a;
+  color: #e0e0e0;
+  font-size: 14px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s, opacity 0.15s;
+
+  &:hover:not(:disabled) {
+    background: #3a3a3a;
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  &:focus-visible {
+    outline: 2px solid #6ea8fe;
+    outline-offset: 2px;
+  }
+
+  &--primary {
+    background: #0d6efd;
+    border-color: #0d6efd;
+    color: #fff;
+    font-weight: 500;
+
+    &:hover:not(:disabled) {
+      background: #0b5ed7;
+    }
+  }
+}

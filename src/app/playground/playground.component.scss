@@ -1,0 +1,260 @@
+:host {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.demo-main {
+  display: grid;
+  grid-template-columns: 280px 1fr 320px;
+  gap: 0;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+
+  @media (max-width: 1100px) {
+    grid-template-columns: 240px 1fr 280px;
+  }
+
+  @media (max-width: 800px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// ── Panels ─────────────────────────────────────────────────────────────────────
+
+.demo-panel {
+  padding: 24px 28px;
+  overflow-y: auto;
+
+  &--controls {
+    border-right: 1px solid #222;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  &--editor {
+    border-right: 1px solid #222;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    overflow-y: hidden;
+  }
+
+  &--result {
+    background: #111;
+  }
+}
+
+// ── Sections ───────────────────────────────────────────────────────────────────
+
+.demo-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  &--editor {
+    flex: 1;
+    min-height: 0;
+  }
+}
+
+.demo-section__title {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #666;
+}
+
+// ── Upload ─────────────────────────────────────────────────────────────────────
+
+.demo-upload {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 24px;
+  border: 2px dashed #333;
+  border-radius: 10px;
+  cursor: pointer;
+  color: #666;
+  font-size: 14px;
+  transition: border-color 0.15s, color 0.15s;
+  position: relative;
+
+  &:hover {
+    border-color: #555;
+    color: #aaa;
+  }
+
+  &__hint {
+    font-size: 11px;
+    color: #444;
+  }
+
+  &__input {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.demo-error {
+  margin: 0;
+  padding: 10px 14px;
+  background: rgba(220, 38, 38, 0.1);
+  border: 1px solid rgba(220, 38, 38, 0.3);
+  border-radius: 6px;
+  color: #f87171;
+  font-size: 13px;
+}
+
+// ── Options ────────────────────────────────────────────────────────────────────
+
+.demo-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  align-items: center;
+}
+
+.demo-option {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  &--checkbox {
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+
+    input[type='checkbox'] {
+      width: 16px;
+      height: 16px;
+      accent-color: #6ea8fe;
+      cursor: pointer;
+    }
+  }
+}
+
+.demo-option__label {
+  font-size: 12px;
+  color: #888;
+}
+
+.demo-select {
+  padding: 6px 10px;
+  background: #1e1e1e;
+  border: 1px solid #333;
+  border-radius: 6px;
+  color: #e0e0e0;
+  font-size: 13px;
+  cursor: pointer;
+
+  &:focus {
+    outline: 2px solid #6ea8fe;
+    outline-offset: 2px;
+  }
+}
+
+.demo-slider {
+  width: 140px;
+  accent-color: #6ea8fe;
+  cursor: pointer;
+}
+
+// ── Editor wrapper ─────────────────────────────────────────────────────────────
+
+.demo-editor-wrap {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+
+  ngx-image-editor {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+}
+
+// ── Result panel ───────────────────────────────────────────────────────────────
+
+.demo-result {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.demo-result__img {
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid #333;
+  display: block;
+  background: #111;
+
+  &--round {
+    border-radius: 50%;
+  }
+}
+
+.demo-result-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 48px 0;
+  color: #444;
+  text-align: center;
+
+  p {
+    margin: 0;
+    font-size: 14px;
+  }
+}
+
+// ── Metadata table ─────────────────────────────────────────────────────────────
+
+.demo-meta {
+  margin: 0;
+  padding: 0;
+  border: 1px solid #222;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.demo-meta__row {
+  display: flex;
+  justify-content: space-between;
+  padding: 9px 14px;
+  font-size: 13px;
+  border-bottom: 1px solid #1a1a1a;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  dt {
+    color: #666;
+  }
+
+  dd {
+    margin: 0;
+    color: #e0e0e0;
+    font-variant-numeric: tabular-nums;
+    font-weight: 500;
+  }
+}
