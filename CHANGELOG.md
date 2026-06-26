@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/HoplaGeiss/ngx-image-forge/compare/v1.2.0...v1.2.1) (2026-06-26)
+
+
+### Bug Fixes
+
+* Improve demo ([ab50249](https://github.com/HoplaGeiss/ngx-image-forge/commit/ab50249fa408b788fc88b071a0df2e1aa896cf23))
+
 # [1.2.0](https://github.com/HoplaGeiss/ngx-image-forge/compare/v1.1.1...v1.2.0) (2026-06-25)
 
 
